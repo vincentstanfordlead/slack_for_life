@@ -3,11 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF Fill Example</title>
+    <title>Form PDF Filler</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Form elements go here -->
-    <button id="fill-download-pdf">Fill and Download PDF</button>
-    <script src="dist/bundle.js"></script>
+    <form id="user-form">
+        <label for="first-name">First Name:</label>
+        <input type="text" id="first-name" name="first-name">
+
+        <label for="middle-name">Middle Name:</label>
+        <input type="text" id="middle-name" name="middle-name">
+
+        <label for="last-name">Last Name:</label>
+        <input type="text" id="last-name" name="last-name">
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob">
+
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender">
+            <option value="">Select</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+
+        <label for="marital-status">Marital Status:</label>
+        <input type="checkbox" id="marital-status" name="marital-status"> Married
+
+        <label for="ssn">SSN:</label>
+        <input type="text" id="ssn" name="ssn">
+
+        <label for="nationality">Nationality:</label>
+        <input type="text" id="nationality" name="nationality">
+
+        <label for="passport-num">Passport Number:</label>
+        <input type="text" id="passport-num" name="passport-num">
+
+        <label for="passport-expiry">Passport Expiry:</label>
+        <input type="date" id="passport-expiry" name="passport-expiry">
+
+        <!-- Button for downloading JSON data -->
+        <button type="button" id="download-json">Download JSON</button>
+
+        <!-- Added button for filling and downloading PDF -->
+        <button type="button" id="fill-download-pdf">Fill and Download PDF</button>
+    </form>
+
+    <script src="path/to/download.js"></script>
+    <script src="path/to/pdf-fill.js"></script>
 </body>
 </html>
