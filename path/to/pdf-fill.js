@@ -3,7 +3,18 @@ document.addEventListener('DOMContentLoaded', function () {
     const fillDownloadPdfButton = document.getElementById('fill-download-pdf');
     
     if (fillDownloadPdfButton) {
-        fillDownloadPdfButton.addEventListener('click', function () {
+        fillDownloadPdfButton.addEventListener('click', async function () {
+            // Dynamically load PDFLib if it is not already loaded
+            if (!window.pdfLib) {
+                try {
+                    await import('https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js')
+                        .then(module => window.pdfLib = module);
+                } catch (error) {
+                    console.error('Failed to load PDFLib:', error);
+                    return;
+                }
+            }
+
             // Gather form data
             const formData = {
                 firstName: document.getElementById('first-name').value || '',
