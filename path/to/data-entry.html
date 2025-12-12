@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Data Entry</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>TurboVisa</h1>
+            <nav>
+                <ul>
+                    <li>Personal Info Hub</li>
+                    <li>Collaboration</li>
+                    <li>Data Sharing</li>
+                    <li>Knowledge Center</li>
+                </ul>
+                <button class="sign-in">Sign In</button>
+            </nav>
+        </header>
+        <aside class="sidebar">
+            <ul>
+                <li>Personal Info Hub</li>
+                <li>Basic</li>
+                <li>Education</li>
+                <li>Work Experience</li>
+                <li>Travel History</li>
+                <li>Family Members</li>
+                <li>Data Sharing</li>
+                <li>Help</li>
+            </ul>
+        </aside>
+        <main>
+            <h2>Data Package: From I-129</h2>
+            <form>
+                <div class="form-group">
+                    <label for="first-name">First Name</label>
+                    <input type="text" id="first-name" value="Vincent">
+                </div>
+                <div class="form-group">
+                    <label for="middle-name">Middle Name</label>
+                    <input type="text" id="middle-name" value="n/a">
+                </div>
+                <div class="form-group">
+                    <label for="last-name">Last Name</label>
+                    <input type="text" id="last-name" value="Deng">
+                </div>
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="text" id="dob" value="06/01/1980">
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <input type="text" id="gender" value="Male">
+                </div>
+                <div class="form-group">
+                    <label for="marital-status">Marital Status</label>
+                    <input type="checkbox" id="marital-status" checked>
+                </div>
+                <div class="form-group">
+                    <label for="ssn">SSN</label>
+                    <input type="text" id="ssn" value="010-XX-7856">
+                </div>
+                <div class="form-group">
+                    <label for="nationality">Nationality</label>
+                    <input type="text" id="nationality" value="China">
+                </div>
+                <div class="form-group">
+                    <label for="passport-num">Passport Num</label>
+                    <input type="text" id="passport-num" value="CN48362025">
+                </div>
+                <div class="form-group">
+                    <label for="passport-expiry">Passport Expired Date</label>
+                    <input type="text" id="passport-expiry" value="12/31/2022" class="error">
+                    <span class="error-message">Error: passport has expired please update</span>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="edit-info">Edit Info</button>
+                    <button type="submit" class="confirm-next">Confirm & Next</button>
+                </div>
+            </form>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
