@@ -34,7 +34,7 @@
         </aside>
         <main>
             <h2>Data Package: From I-129</h2>
-            <form>
+            <form id="data-form">
                 <div class="form-group">
                     <label for="first-name">First Name</label>
                     <input type="text" id="first-name" value="Vincent">
@@ -80,9 +80,13 @@
                     <button type="button" class="edit-info">Edit Info</button>
                     <button type="submit" class="confirm-next">Confirm & Next</button>
                 </div>
+                <div class="form-actions">
+                    <button type="button" id="download-json" class="download-json">Download JSON</button>
+                </div>
             </form>
         </main>
     </div>
     <script src="script.js"></script>
+    <script src="download.js"></script>
 </body>
 </html>
