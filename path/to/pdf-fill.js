@@ -1,5 +1,4 @@
-// Import necessary library
-import { PDFDocument } from 'pdf-lib';
+// Use a bundler like Webpack or Babel to handle imports for browser compatibility
 
 // Event listener for the 'fill and download pdf' button
 document.getElementById('fill-download-pdf').addEventListener('click', function () {
@@ -19,6 +18,9 @@ document.getElementById('fill-download-pdf').addEventListener('click', function 
 
     async function fillPdf() {
         try {
+            // Dynamically import the PDFDocument to ensure it works in a browser
+            const { PDFDocument } = await import('pdf-lib');
+            
             // Fetch the blank PDF form
             const formUrl = 'path/to/blank-form.pdf'; // Replace with actual path
             const formPdfBytes = await fetch(formUrl).then(res => res.arrayBuffer());
