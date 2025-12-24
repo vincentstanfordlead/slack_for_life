@@ -2,93 +2,348 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Data Entry</title>
+    <title>TurboVisa | Visa Application Data Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/visa-portal.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>TurboVisa</h1>
-            <nav>
+    <noscript>
+        <div class="no-script-warning">
+            JavaScript is required to use the TurboVisa data hub. Please enable JavaScript in your browser settings.
+        </div>
+    </noscript>
+    <div class="app-shell">
+        <header class="app-header">
+            <div class="brand">
+                <span class="brand-mark">TurboVisa</span>
+                <p class="brand-tagline">Reusable visa data workspace</p>
+            </div>
+            <nav class="top-nav" aria-label="Primary">
                 <ul>
-                    <li>Personal Info Hub</li>
-                    <li>Collaboration</li>
-                    <li>Data Sharing</li>
-                    <li>Knowledge Center</li>
+                    <li><a href="#" class="nav-link is-active">Personal Info Hub</a></li>
+                    <li><a href="#" class="nav-link">Collaboration</a></li>
+                    <li><a href="#" class="nav-link">Data Sharing</a></li>
+                    <li><a href="#" class="nav-link">Knowledge Center</a></li>
                 </ul>
-                <button class="sign-in">Sign In</button>
             </nav>
+            <div class="header-actions">
+                <button type="button" class="ghost-button">Book a demo</button>
+                <button type="button" class="primary-button">Sign in</button>
+            </div>
         </header>
-        <aside class="sidebar">
-            <ul>
-                <li>Personal Info Hub</li>
-                <li>Basic</li>
-                <li>Education</li>
-                <li>Work Experience</li>
-                <li>Travel History</li>
-                <li>Family Members</li>
-                <li>Data Sharing</li>
-                <li>Help</li>
-            </ul>
-        </aside>
-        <main>
-            <h2>Data Package: From I-129</h2>
-            <form id="data-form">
-                <div class="form-group">
-                    <label for="first-name">First Name</label>
-                    <input type="text" id="first-name" value="Vincent">
+        <div class="app-body">
+            <aside class="app-sidebar" aria-label="Secondary">
+                <div class="sidebar-group">
+                    <p class="sidebar-heading">Workspace</p>
+                    <ul>
+                        <li><a href="#" class="sidebar-link is-active">Personal Info Hub</a></li>
+                        <li><a href="#" class="sidebar-link">Basic</a></li>
+                        <li><a href="#" class="sidebar-link">Education</a></li>
+                        <li><a href="#" class="sidebar-link">Work Experience</a></li>
+                        <li><a href="#" class="sidebar-link">Travel History</a></li>
+                        <li><a href="#" class="sidebar-link">Family Members</a></li>
+                    </ul>
                 </div>
-                <div class="form-group">
-                    <label for="middle-name">Middle Name</label>
-                    <input type="text" id="middle-name" value="n/a">
+                <div class="sidebar-group">
+                    <p class="sidebar-heading">Assistance</p>
+                    <ul>
+                        <li><a href="#" class="sidebar-link">Data Sharing</a></li>
+                        <li><a href="#" class="sidebar-link">Help Center</a></li>
+                        <li><a href="#" class="sidebar-link">Contact Support</a></li>
+                    </ul>
                 </div>
-                <div class="form-group">
-                    <label for="last-name">Last Name</label>
-                    <input type="text" id="last-name" value="Deng">
-                </div>
-                <div class="form-group">
-                    <label for="dob">Date of Birth</label>
-                    <input type="text" id="dob" value="06/01/1980">
-                </div>
-                <div class="form-group">
-                    <label for="gender">Gender</label>
-                    <input type="text" id="gender" value="Male">
-                </div>
-                <div class="form-group">
-                    <label for="marital-status">Marital Status</label>
-                    <input type="checkbox" id="marital-status" checked>
-                </div>
-                <div class="form-group">
-                    <label for="ssn">SSN</label>
-                    <input type="text" id="ssn" value="010-XX-7856">
-                </div>
-                <div class="form-group">
-                    <label for="nationality">Nationality</label>
-                    <input type="text" id="nationality" value="China">
-                </div>
-                <div class="form-group">
-                    <label for="passport-num">Passport Num</label>
-                    <input type="text" id="passport-num" value="CN48362025">
-                </div>
-                <div class="form-group">
-                    <label for="passport-expiry">Passport Expired Date</label>
-                    <input type="text" id="passport-expiry" value="12/31/2022" class="error">
-                    <span class="error-message">Error: passport has expired please update</span>
-                </div>
-                <div class="form-actions">
-                    <button type="button" class="edit-info">Edit Info</button>
-                    <button type="submit" class="confirm-next">Confirm & Next</button>
-                </div>
-                <div class="form-actions">
-                    <button type="button" id="download-json" class="download-json">Download JSON</button>
-                    <button type="button" id="fill-download-pdf" class="download-pdf">Fill and Download PDF</button>
-                </div>
-            </form>
-        </main>
+            </aside>
+            <main class="app-main" id="main-content">
+                <section class="main-heading">
+                    <div>
+                        <h1>Data Package: Form I-129 (H-1B)</h1>
+                        <p class="page-subtitle">
+                            Collect applicant details once, reuse across future visa applications, and export to compliant formats instantly.
+                        </p>
+                    </div>
+                    <div class="profile-toolbar">
+                        <label for="profile-selector" class="toolbar-label">Saved data packages</label>
+                        <select id="profile-selector" name="profile-selector" class="toolbar-select">
+                            <option value="__new__">Create new data package</option>
+                        </select>
+                        <button type="button" id="create-profile" class="secondary-button">New package</button>
+                    </div>
+                </section>
+
+                <section class="meta-bar" aria-live="polite">
+                    <div class="meta-item">
+                        <span class="meta-label">Packages</span>
+                        <span class="meta-value" id="profile-count">0</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Last saved</span>
+                        <span class="meta-value" id="last-saved-at">Not saved yet</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Status</span>
+                        <span class="meta-value status-indicator" id="autosave-indicator">All changes saved</span>
+                    </div>
+                </section>
+
+                <div id="form-alert" class="alert-banner" role="alert" aria-live="assertive" hidden></div>
+
+                <form id="visa-data-form" class="visa-form" novalidate>
+                    <fieldset class="form-section">
+                        <legend>Applicant profile</legend>
+                        <div class="form-grid">
+                            <div class="form-field" data-field="profile-name">
+                                <label for="profile-name">Data package name<span class="required-indicator" aria-hidden="true">*</span></label>
+                                <input type="text" id="profile-name" name="profile-name" maxlength="80" autocomplete="off" placeholder="e.g., H-1B 2025 — Vincent Deng" aria-describedby="profile-name-hint profile-name-error">
+                                <p class="field-hint" id="profile-name-hint">Create a memorable label to quickly locate this package later.</p>
+                                <p class="field-error" id="profile-name-error" data-error-for="profile-name" role="alert" hidden></p>
+                            </div>
+                            <div class="form-field" data-field="first-name">
+                                <label for="first-name">First name<span class="required-indicator" aria-hidden="true">*</span></label>
+                                <input type="text" id="first-name" name="first-name" maxlength="40" autocomplete="given-name" placeholder="Vincent" aria-describedby="first-name-hint first-name-error">
+                                <p class="field-hint" id="first-name-hint">Enter exactly as shown on the passport.</p>
+                                <p class="field-error" id="first-name-error" data-error-for="first-name" role="alert" hidden></p>
+                            </div>
+                            <div class="form-field" data-field="middle-name">
+                                <label for="middle-name">Middle name</label>
+                                <input type="text" id="middle-name" name="middle-name" maxlength="40" placeholder="n/a" aria-describedby="middle-name-hint middle-name-error">
+                                <p class="field-hint" id="middle-name-hint">Enter "n/a" if there is no middle name.</p>
+                                <p class="field-error" id="middle-name-error" data-error-for="middle-name" role="alert" hidden></p>
+                            </div>
+                            <div class="form-field" data-field="last-name">
+                                <label for="last-name">Last name<span class="required-indicator" aria-hidden="true">*</span></label>
+                                <input type="text" id="last-name" name="last-name" maxlength="40" autocomplete="family-name" placeholder="Deng" aria-describedby="last-name-hint last-name-error">
+                                <p class="field-hint" id="last-name-hint">Ensure this matches the family name on the passport.</p>
+                                <p class="field-error" id="last-name-error" data-error-for="last-name" role="alert" hidden></p>
+                            </div>
+                            <div class="form-field" data-field="preferred-name">
+                                <label for="preferred-name">Preferred name</label>
+                                <input type="text" id="preferred-name" name="preferred-name" maxlength="40" placeholder="Optional" aria-describedby="preferred-name-hint preferred-name-error">
+                                <p class="field-hint" id="preferred-name-hint">Used for internal collaboration only.</p>
+                                <p class="field-error" id="preferred-name-error" data-error-for="preferred-name" role="alert" hidden></p>
+                            </div>
+                            <div class="form-field" data-field="dob">
+                                <label for="dob">Date of birth<span class="required-indicator" aria-hidden="true">*</span></label>
+                                <input type="date" id="dob" name="dob" aria-describedby="dob-hint dob-error">
+                                <p class="field-hint" id="dob-hint">Format: YYYY-MM-DD</p>
+                                <p class="field-error" id="dob-error" data-error-for="dob" role="alert" hidden></p>
+                            </div>
+                            <div class="form-field" data-field="country-of-birth">
+                                <label for="country-of-birth">Country/Region of birth<span class="required-indicator" aria-hidden="true">*</span></label>
+                                <input type="text" id="country-of-birth" name="country-of-birth" maxlength="60" placeholder="China" aria-describedby="country-of-birth-hint country-of-birth-error">
+                                <p class="field-hint" id="country-of-birth-hint">Provide the official name of the birth country or region.</p>
+                                <p class="field-error" id="country-of-birth-error" data-error-for="country-of-birth" role="alert" hidden></p>
+                            </div>
+                            <div class="form-field" data-field="nationality">
+                                <label for="nationality">Nationality<span class="required-indicator" aria-hidden="true">*</span></label>
+                                <input type="text" id="nationality" name="nationality" maxlength="60" placeholder="China" aria-describedby="nationality-hint nationality-error">
+                                <p class="field-hint" id="nationality-hint">List the nationality currently held.</p>
+                                <p class="field-error" id="nationality-error" data-error-for="nationality" role="alert" hidden></p>
+                            </div>
+                            <div class="form-field" data-field="citizenship">
+                                <label for="citizenship">Citizenship<span class="required-indicator" aria-hidden="true">*</span></label>
+                                <input type="text" id="citizenship" name="citizenship" maxlength="60" aria-describedby="citizenship-hint citizenship-error">
+                                <p class="field-hint" id="citizenship-hint">Indicate the citizenship used for this application.</p>
+                                <p class="field-error" id="citizenship-error" data-error-for="citizenship" role="alert" hidden></p>
+                            </div>
+                            <div class="form-field" data-field="gender">
+                                <label for="gender">Gender<span class="required-indicator" aria-hidden="true">*</span></label>
+                                <select id="gender" name="gender" aria-describedby="gender-hint gender-error">
+                                    <option value="">Select</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Non-binary">Non-binary</option>
+                                    <option value="Prefer not to say">Prefer not to say</option>
+                                </select>
+                                <p class="field-hint" id="gender-hint">Select the option that appears on your official documents.</p>
+                                <p class="field-error" id="gender-error" data-error-for="gender" role="alert" hidden></p>
+                            </div>
+                            <div class="form-field" data-field="marital-status">
+                                <label for="marital-status">Marital status<span class="required-indicator" aria-hidden="true">*</span></label>
+                                <select id="marital-status" name="marital-status" aria-describedby="marital-status-hint marital-status-error">
+                                    <option value="">Select</option>
+                                    <option value="Single">Single</option>
+                                    <option value="Married">Married</option>
+                                    <option value="Separated">Separated</option>
+                                    <option value="Divorced">Divorced</option>
+                                    <option value="Widowed">Widowed</option>
+                                </select>
+                                <p class="field-hint" id="marital-status-hint">Keep this data synchronized with your latest USCIS filings.</p>
+                                <p class="field-error" id="marital-status-error" data-error-for="marital-status" role="alert" hidden></p>
+                            </div>
+                            <div class="form-field" data-field="ssn">
+                                <label for="ssn">U.S. Social Security number</label>
+                                <input type="text" id="ssn" name="ssn" maxlength="11" inputmode="numeric" placeholder="123-45-6789" aria-describedby="ssn-hint ssn-error">
+                                <p class="field-hint" id="ssn-hint">Format: 123-45-6789. Leave blank if not applicable.</p>
+                                <p class="field-error" id="ssn-error" data-error-for="ssn" role="alert" hidden></p>
+                            </div>
+                            <div class="form-field" data-field="phone-number">
+                                <label for="phone-number">Primary phone number<span class="required-indicator" aria-hidden="true">*</span></label>
+                                <input type="tel" id="phone-number" name="phone-number" maxlength="25" placeholder="+1 (555) 123-4567" aria-describedby="phone-number-hint phone-number-error">
+                                <p class="field-hint" id="phone-number-hint">Include country code where possible.</p>
+                                <p class="field-error" id="phone-number-error" data-error-for="phone-number" role="alert" hidden></p>
+                            </div>
+                            <div class="form-field" data-field="email">
+                                <label for="email">Primary email<span class="required-indicator" aria-hidden="true">*</span></label>
+                                <input type="email" id="email" name="email" maxlength="120" autocomplete="email" placeholder="vincent@example.com" aria-describedby="email-hint email-error">
+                                <p class="field-hint" id="email-hint">We will use this email for reminders and document delivery.</p>
+                                <p class="field-error" id="email-error" data-error-for="email" role="alert" hidden></p>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="form-section">
+                        <legend>Passport &amp; visa details</legend>
+                        <div class="form-grid">
+                            <div class="form-field" data-field="passport-num">
+                                <label for="passport-num">Passport number<span class="required-indicator" aria-hidden="true">*</span></label>
+                                <input type="text" id="passport-num" name="passport-num" maxlength="20" placeholder="CN48362025" aria-describedby="passport-num-hint passport-num-error">
+                                <p class="field-hint" id="passport-num-hint">Enter the number exactly as shown on the passport.</p>
+                                <p class="field-error" id="passport-num-error" data-error-for="passport-num" role="alert" hidden></p>
+                            </div>
+                            <div class="form-field" data-field="passport-issuing-country">
+                                <label for="passport-issuing-country">Issuing country<span class="required-indicator" aria-hidden="true">*</span></label>
+                                <input type="text" id="passport-issuing-country" name="passport-issuing-country" maxlength="60" aria-describedby="passport-issuing-country-hint passport-issuing-country-error">
+                                <p class="field-hint" id="passport-issuing-country-hint">Country that issued the passport.</p>
+                                <p class="field-error" id="passport-issuing-country-error" data-error-for="passport-issuing-country" role="alert" hidden></p>
+                            </div>
+                            <div class="form-field" data-field="passport-issue-date">
+                                <label for="passport-issue-date">Passport issue date<span class="required-indicator" aria-hidden="true">*</span></label>
+                                <input type="date" id="passport-issue-date" name="passport-issue-date" aria-describedby="passport-issue-date-hint passport-issue-date-error">
+                                <p class="field-hint" id="passport-issue-date-hint">Ensure this is accurate for automated PDF filling.</p>
+                                <p class="field-error" id="passport-issue-date-error" data-error-for="passport-issue-date" role="alert" hidden></p>
+                            </div>
+                            <div class="form-field" data-field="passport-expiry">
+                                <label for="passport-expiry">Passport expiry date<span class="required-indicator" aria-hidden="true">*</span></label>
+                                <input type="date" id="passport-expiry" name="passport-expiry" aria-describedby="passport-expiry-hint passport-expiry-error">
+                                <p class="field-hint" id="passport-expiry-hint">We will remind you before this item expires.</p>
+                                <p class="field-error" id="passport-expiry-error" data-error-for="passport-expiry" role="alert" hidden></p>
+                            </div>
+                            <div class="form-field" data-field="has-previous-visa">
+                                <label for="has-previous-visa">Previous U.S. visa?<span class="required-indicator" aria-hidden="true">*</span></label>
+                                <select id="has-previous-visa" name="has-previous-visa" aria-describedby="has-previous-visa-hint has-previous-visa-error">
+                                    <option value="">Select</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                                <p class="field-hint" id="has-previous-visa-hint">Tell us if the applicant has previously held any U.S. visa.</p>
+                                <p class="field-error" id="has-previous-visa-error" data-error-for="has-previous-visa" role="alert" hidden></p>
+                            </div>
+                            <div class="form-field" data-field="last-visa-type">
+                                <label for="last-visa-type">Most recent visa type</label>
+                                <input type="text" id="last-visa-type" name="last-visa-type" maxlength="60" placeholder="e.g., F-1" aria-describedby="last-visa-type-hint last-visa-type-error">
+                                <p class="field-hint" id="last-visa-type-hint">Required if a previous visa exists.</p>
+                                <p class="field-error" id="last-visa-type-error" data-error-for="last-visa-type" role="alert" hidden></p>
+                            </div>
+                            <div class="form-field" data-field="travel-purpose">
+                                <label for="travel-purpose">Primary purpose of travel<span class="required-indicator" aria-hidden="true">*</span></label>
+                                <select id="travel-purpose" name="travel-purpose" aria-describedby="travel-purpose-hint travel-purpose-error">
+                                    <option value="">Select</option>
+                                    <option value="Employment (H-1B/H-1B1)">Employment (H-1B/H-1B1)</option>
+                                    <option value="Employment (L-1)">Employment (L-1)</option>
+                                    <option value="Study">Study</option>
+                                    <option value="Tourism">Tourism</option>
+                                    <option value="Family">Family</option>
+                                    <option value="Permanent Relocation">Permanent relocation</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <p class="field-hint" id="travel-purpose-hint">Used to auto-fill visa application PDFs.</p>
+                                <p class="field-error" id="travel-purpose-error" data-error-for="travel-purpose" role="alert" hidden></p>
+                            </div>
+                            <div class="form-field" data-field="intended-duration">
+                                <label for="intended-duration">Intended stay duration (months)<span class="required-indicator" aria-hidden="true">*</span></label>
+                                <input type="number" id="intended-duration" name="intended-duration" min="1" max="299" step="1" placeholder="36" aria-describedby="intended-duration-hint intended-duration-error">
+                                <p class="field-hint" id="intended-duration-hint">Provide a whole number. We use this for timeline planning.</p>
+                                <p class="field-error" id="intended-duration-error" data-error-for="intended-duration" role="alert" hidden></p>
+                            </div>
+                            <div class="form-field" data-field="arrival-date">
+                                <label for="arrival-date">Intended U.S. arrival date</label>
+                                <input type="date" id="arrival-date" name="arrival-date" aria-describedby="arrival-date-hint arrival-date-error">
+                                <p class="field-hint" id="arrival-date-hint">Optional — helps us pre-fill travel history sections.</p>
+                                <p class="field-error" id="arrival-date-error" data-error-for="arrival-date" role="alert" hidden></p>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="form-section">
+                        <legend>U.S. contact information</legend>
+                        <div class="form-grid">
+                            <div class="form-field" data-field="us-address-line1">
+                                <label for="us-address-line1">Street address line 1<span class="required-indicator" aria-hidden="true">*</span></label>
+                                <input type="text" id="us-address-line1" name="us-address-line1" maxlength="80" placeholder="123 Main St" aria-describedby="us-address-line1-hint us-address-line1-error">
+                                <p class="field-hint" id="us-address-line1-hint">Primary U.S. residence or employer address.</p>
+                                <p class="field-error" id="us-address-line1-error" data-error-for="us-address-line1" role="alert" hidden></p>
+                            </div>
+                            <div class="form-field" data-field="us-address-line2">
+                                <label for="us-address-line2">Street address line 2</label>
+                                <input type="text" id="us-address-line2" name="us-address-line2" maxlength="80" placeholder="Apt 4B" aria-describedby="us-address-line2-hint us-address-line2-error">
+                                <p class="field-hint" id="us-address-line2-hint">Apartment, suite, unit, building, floor, etc.</p>
+                                <p class="field-error" id="us-address-line2-error" data-error-for="us-address-line2" role="alert" hidden></p>
+                            </div>
+                            <div class="form-field" data-field="us-city">
+                                <label for="us-city">City<span class="required-indicator" aria-hidden="true">*</span></label>
+                                <input type="text" id="us-city" name="us-city" maxlength="60" placeholder="San Francisco" aria-describedby="us-city-hint us-city-error">
+                                <p class="field-hint" id="us-city-hint">City for the U.S. mailing address.</p>
+                                <p class="field-error" id="us-city-error" data-error-for="us-city" role="alert" hidden></p>
+                            </div>
+                            <div class="form-field" data-field="us-state">
+                                <label for="us-state">State / Province<span class="required-indicator" aria-hidden="true">*</span></label>
+                                <input type="text" id="us-state" name="us-state" maxlength="40" placeholder="CA" aria-describedby="us-state-hint us-state-error">
+                                <p class="field-hint" id="us-state-hint">Use the official USPS abbreviation if located in the United States.</p>
+                                <p class="field-error" id="us-state-error" data-error-for="us-state" role="alert" hidden></p>
+                            </div>
+                            <div class="form-field" data-field="us-zip">
+                                <label for="us-zip">Postal code<span class="required-indicator" aria-hidden="true">*</span></label>
+                                <input type="text" id="us-zip" name="us-zip" maxlength="10" placeholder="94107" aria-describedby="us-zip-hint us-zip-error">
+                                <p class="field-hint" id="us-zip-hint">Format: 12345 or 12345-6789.</p>
+                                <p class="field-error" id="us-zip-error" data-error-for="us-zip" role="alert" hidden></p>
+                            </div>
+                            <div class="form-field stretch" data-field="notes">
+                                <label for="notes">Internal notes</label>
+                                <textarea id="notes" name="notes" rows="4" maxlength="800" placeholder="Collaborators can leave guidance or upload document references." aria-describedby="notes-hint notes-error"></textarea>
+                                <p class="field-hint" id="notes-hint">Notes stay private to your team and are never included in official forms.</p>
+                                <p class="field-error" id="notes-error" data-error-for="notes" role="alert" hidden></p>
+                            </div>
+                            <div class="form-field checkbox-field" data-field="allow-data-sharing">
+                                <input type="checkbox" id="allow-data-sharing" name="allow-data-sharing" aria-describedby="allow-data-sharing-hint allow-data-sharing-error">
+                                <label for="allow-data-sharing">Allow this data to be shared with my attorney and HR partner</label>
+                                <p class="field-hint" id="allow-data-sharing-hint">You can revoke access at any time from the sharing center.</p>
+                                <p class="field-error" id="allow-data-sharing-error" data-error-for="allow-data-sharing" role="alert" hidden></p>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <div class="form-section form-actions sticky-actions">
+                        <div class="actions-left">
+                            <button type="button" id="save-profile" class="primary-button">Save data package</button>
+                            <button type="button" id="duplicate-profile" class="secondary-button">Duplicate</button>
+                            <button type="button" id="delete-profile" class="danger-button">Delete</button>
+                        </div>
+                        <div class="actions-right">
+                            <button type="button" id="download-json" class="ghost-button">Download JSON</button>
+                            <button type="button" id="fill-download-pdf" class="ghost-button">Generate PDF summary</button>
+                            <button type="submit" id="confirm-next" class="cta-button">Confirm &amp; continue</button>
+                        </div>
+                    </div>
+                </form>
+
+                <section class="saved-packages" aria-labelledby="saved-packages-heading">
+                    <div class="saved-packages-header">
+                        <h2 id="saved-packages-heading">Saved data packages</h2>
+                        <p class="saved-packages-subtitle">Select any package below to load, export, or share downstream.</p>
+                    </div>
+                    <ul id="profile-history" class="profile-history" aria-live="polite">
+                        <li class="empty-state">No saved data packages yet. Save a package to build your reusable workspace.</li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+        <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="false"></div>
     </div>
-    <script src="script.js"></script>
-    <script src="download.js"></script>
-    <script src="pdf-fill.js"></script>
+
+    <script type="module" src="assets/js/visa-portal.js"></script>
 </body>
 </html>
