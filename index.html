@@ -3,43 +3,772 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TurboVisa</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>TurboVisa - Single Source of Immigration Info</title>
+    <meta name="description" content="TurboVisa centralizes immigration data collection and PDF generation for a streamlined experience.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js" defer></script>
+    <style>
+        :root {
+            color-scheme: light dark;
+            --color-background: #f8fafc;
+            --color-card: #ffffff;
+            --color-primary: #2563eb;
+            --color-primary-dark: #1d4ed8;
+            --color-text: #0f172a;
+            --color-text-muted: #475569;
+            --color-border: #e2e8f0;
+            --color-success: #15803d;
+            --color-error: #dc2626;
+            font-size: 16px;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--color-background);
+            color: var(--color-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: #fff;
+            border-bottom: 1px solid var(--color-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem clamp(1rem, 4vw, 2.5rem);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+
+        .logo {
+            font-size: 1.375rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: clamp(1rem, 2vw, 2.5rem);
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--color-text-muted);
+            font-weight: 600;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .nav-links a:hover,
+        .nav-links a:focus-visible {
+            color: var(--color-primary);
+        }
+
+        .sign-in {
+            padding: 0.6rem 1.4rem;
+            border-radius: 999px;
+            border: 1px solid var(--color-primary);
+            background: transparent;
+            color: var(--color-primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .sign-in:hover,
+        .sign-in:focus-visible {
+            background: var(--color-primary);
+            color: #fff;
+        }
+
+        main {
+            flex: 1;
+            display: grid;
+            gap: clamp(2rem, 5vw, 4rem);
+            padding: clamp(1.5rem, 4vw, 4rem) clamp(1rem, 4vw, 2rem) clamp(3rem, 6vw, 5rem);
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .hero {
+            background: linear-gradient(120deg, rgba(37, 99, 235, 0.08), rgba(79, 70, 229, 0.08));
+            border-radius: 24px;
+            padding: clamp(2rem, 6vw, 3.75rem);
+            display: grid;
+            gap: clamp(1.5rem, 4vw, 2.5rem);
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 4vw, 3.25rem);
+            line-height: 1.1;
+            margin: 0;
+        }
+
+        .hero p {
+            margin: 0;
+            color: var(--color-text-muted);
+            font-size: clamp(1rem, 2.4vw, 1.2rem);
+            max-width: 38rem;
+        }
+
+        .form-controls {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+
+        .form-controls select {
+            padding: 0.75rem;
+            border-radius: 12px;
+            border: 1px solid var(--color-border);
+            background: #fff;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--color-text);
+            transition: border-color 0.2s ease-in-out;
+        }
+
+        .form-controls select:focus-visible {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        .explore-btn {
+            justify-self: start;
+            padding: 0.85rem clamp(1.5rem, 4vw, 3rem);
+            border-radius: 999px;
+            border: none;
+            background: var(--color-primary);
+            color: #fff;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s ease-in-out, transform 0.2s ease-in-out;
+        }
+
+        .explore-btn:hover,
+        .explore-btn:focus-visible {
+            background: var(--color-primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .application-suite {
+            display: grid;
+            gap: clamp(1.5rem, 4vw, 2.5rem);
+        }
+
+        .application-suite h2 {
+            margin: 0;
+            font-size: clamp(1.5rem, 3vw, 2.25rem);
+        }
+
+        .suite-grid {
+            display: grid;
+            gap: clamp(1.5rem, 3vw, 2rem);
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+
+        .suite-card {
+            background: var(--color-card);
+            border-radius: 20px;
+            padding: 1.75rem;
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            box-shadow: 0 12px 40px rgba(15, 23, 42, 0.08);
+            display: grid;
+            gap: 1rem;
+        }
+
+        .suite-card h3 {
+            margin: 0;
+            font-size: 1.15rem;
+        }
+
+        .suite-card p {
+            margin: 0;
+            color: var(--color-text-muted);
+            line-height: 1.55;
+        }
+
+        .pdf-form-wrapper {
+            background: var(--color-card);
+            border-radius: 24px;
+            padding: clamp(2rem, 5vw, 3rem);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            box-shadow: 0 20px 60px rgba(15, 23, 42, 0.12);
+            display: grid;
+            gap: clamp(1.5rem, 4vw, 2.5rem);
+        }
+
+        .pdf-form-wrapper header {
+            border: none;
+            position: relative;
+            padding: 0;
+        }
+
+        .pdf-form-wrapper header h2 {
+            margin: 0;
+            font-size: clamp(1.4rem, 3vw, 2rem);
+        }
+
+        .pdf-form-wrapper header p {
+            margin: 0.35rem 0 0;
+            color: var(--color-text-muted);
+            line-height: 1.6;
+        }
+
+        form {
+            display: grid;
+            gap: 1.25rem;
+        }
+
+        .field-group {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+
+        label {
+            display: grid;
+            gap: 0.45rem;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="tel"],
+        select {
+            padding: 0.75rem 0.9rem;
+            border-radius: 12px;
+            border: 1px solid var(--color-border);
+            font: inherit;
+            color: var(--color-text);
+            background: #fff;
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+
+        input:focus-visible,
+        select:focus-visible {
+            outline: none;
+            border-color: rgba(37, 99, 235, 0.8);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
+        }
+
+        .checkbox-field {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            padding: 0.65rem 0.9rem;
+            border: 1px dashed var(--color-border);
+            border-radius: 12px;
+            background: rgba(148, 163, 184, 0.08);
+        }
+
+        .checkbox-field input[type="checkbox"] {
+            width: 1.1rem;
+            height: 1.1rem;
+            accent-color: var(--color-primary);
+        }
+
+        .form-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .helper-text {
+            color: var(--color-text-muted);
+            font-size: 0.92rem;
+        }
+
+        .primary-action {
+            padding: 0.85rem 1.9rem;
+            border-radius: 999px;
+            border: none;
+            background: linear-gradient(135deg, var(--color-primary), rgba(79, 70, 229, 0.95));
+            color: #fff;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out, filter 0.2s ease-in-out;
+        }
+
+        .primary-action:hover,
+        .primary-action:focus-visible {
+            transform: translateY(-1px);
+            filter: brightness(1.05);
+        }
+
+        .primary-action[disabled] {
+            opacity: 0.65;
+            cursor: not-allowed;
+            transform: none;
+            filter: none;
+        }
+
+        .status-message {
+            font-size: 0.95rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .status-message[data-state="idle"] {
+            display: none;
+        }
+
+        .status-message[data-state="error"] {
+            color: var(--color-error);
+        }
+
+        .status-message[data-state="success"] {
+            color: var(--color-success);
+        }
+
+        footer {
+            border-top: 1px solid var(--color-border);
+            background: #fff;
+        }
+
+        footer .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem clamp(1rem, 4vw, 2rem);
+            color: var(--color-text-muted);
+            font-size: 0.92rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        footer a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        footer a:hover,
+        footer a:focus-visible {
+            color: var(--color-primary);
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-wrap: wrap;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .form-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .primary-action {
+                width: 100%;
+            }
+
+            .helper-text {
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
         <nav>
-            <div class="logo">TurboVisa</div>
-            <ul class="nav-links">
-                <li><a href="#">Personal Info Hub</a></li>
-                <li><a href="#">Collaboration</a></li>
-                <li><a href="#">Data Sharing</a></li>
-                <li><a href="#">Knowledge Center</a></li>
+            <div class="logo" aria-label="TurboVisa home">TurboVisa</div>
+            <ul class="nav-links" role="list">
+                <li><a href="#personal-info">Personal Info Hub</a></li>
+                <li><a href="#pdf-form">Collaboration</a></li>
+                <li><a href="#pdf-form">Data Sharing</a></li>
+                <li><a href="#knowledge-center">Knowledge Center</a></li>
             </ul>
-            <button class="sign-in">Sign In</button>
+            <button class="sign-in" type="button">Sign In</button>
         </nav>
     </header>
+
     <main>
-        <section class="hero">
+        <section class="hero" id="personal-info">
             <h1>Single Source of Immigration Info</h1>
-            <p>A personal info repository throughout your immigration journey, say goodbye to repetitive data entry.</p>
-            <div class="form-controls">
-                <select>
-                    <option>Employment-Based</option>
+            <p>Centralize every detail of your immigration journey—TurboVisa stores, reuses, and keeps your documents ready for any petition.</p>
+            <div class="form-controls" aria-label="Application selectors">
+                <select aria-label="Case type">
+                    <option selected>Employment-Based</option>
+                    <option>Family-Based</option>
+                    <option>Naturalization</option>
+                    <option>Adjustment of Status</option>
                 </select>
-                <select>
-                    <option>H-1B Applications</option>
+                <select aria-label="Application category">
+                    <option selected>H-1B Applications</option>
+                    <option>L-1A/L-1B</option>
+                    <option>PERM</option>
+                    <option>Green Card</option>
+                    <option>Citizenship</option>
                 </select>
-                <select>
-                    <option>Select Petition Form</option>
+                <select aria-label="Petition form">
+                    <option selected>Select Petition Form</option>
                     <option>Form I-129</option>
                     <option>Lottery Registration</option>
                     <option>Prevailing Wage</option>
                     <option>Labor Certification Application</option>
+                    <option>Form I-485</option>
+                    <option>Form I-140</option>
                 </select>
             </div>
-            <button class="explore-btn">Start Data Exploration</button>
+            <button class="explore-btn" type="button">Start Data Exploration</button>
+        </section>
+
+        <section class="application-suite" id="knowledge-center">
+            <h2>Everything your immigration team needs, in one place</h2>
+            <div class="suite-grid">
+                <article class="suite-card">
+                    <h3>Intelligent Personal Info Hub</h3>
+                    <p>Capture every personal, employment, and travel detail once. TurboVisa keeps it structured, searchable, and ready for any immigration form.</p>
+                </article>
+                <article class="suite-card">
+                    <h3>Secure Collaboration Workspace</h3>
+                    <p>Share controlled access with attorneys, HR partners, and family. Capture updates with tracked changes so you never miss a deadline.</p>
+                </article>
+                <article class="suite-card">
+                    <h3>Knowledge Center & Compliance Insights</h3>
+                    <p>Receive proactive alerts, learn requirements for each application stage, and count on always-ready documentation.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="pdf-form-wrapper" id="pdf-form">
+            <header>
+                <h2>Generate a Pre-Filled Immigration PDF</h2>
+                <p>Complete the quick form below and download a clean PDF summary tailored for immigration petitions. All fields are required unless noted.</p>
+            </header>
+
+            <form id="pdf-form-element" autocomplete="on" novalidate>
+                <div class="field-group">
+                    <label for="first-name">
+                        First Name
+                        <input type="text" id="first-name" name="first-name" placeholder="Jane" autocomplete="given-name" required>
+                    </label>
+                    <label for="middle-name">
+                        Middle Name (optional)
+                        <input type="text" id="middle-name" name="middle-name" placeholder="Alexandra" autocomplete="additional-name">
+                    </label>
+                    <label for="last-name">
+                        Last Name
+                        <input type="text" id="last-name" name="last-name" placeholder="Doe" autocomplete="family-name" required>
+                    </label>
+                </div>
+
+                <div class="field-group">
+                    <label for="dob">
+                        Date of Birth
+                        <input type="date" id="dob" name="dob" required>
+                    </label>
+                    <label for="gender">
+                        Gender
+                        <select id="gender" name="gender" required>
+                            <option value="" disabled selected>Select gender</option>
+                            <option>Female</option>
+                            <option>Male</option>
+                            <option>Non-binary</option>
+                            <option>Prefer not to say</option>
+                            <option>Other</option>
+                        </select>
+                    </label>
+                    <div class="checkbox-field">
+                        <input type="checkbox" id="marital-status" name="marital-status" value="Married">
+                        <label for="marital-status">Married</label>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label for="ssn">
+                        Social Security Number
+                        <input type="text" id="ssn" name="ssn" placeholder="123-45-6789" autocomplete="off" inputmode="numeric" pattern="^\d{3}-?\d{2}-?\d{4}$" required>
+                    </label>
+                    <label for="nationality">
+                        Nationality
+                        <input type="text" id="nationality" name="nationality" placeholder="United States" autocomplete="country-name" required>
+                    </label>
+                    <label for="passport-num">
+                        Passport Number
+                        <input type="text" id="passport-num" name="passport-num" placeholder="A12345678" autocomplete="off" required>
+                    </label>
+                </div>
+
+                <div class="field-group">
+                    <label for="passport-expiry">
+                        Passport Expiry Date
+                        <input type="date" id="passport-expiry" name="passport-expiry" required>
+                    </label>
+                    <label for="email-address">
+                        Contact Email
+                        <input type="email" id="email-address" name="email-address" placeholder="jane.doe@email.com" autocomplete="email" required>
+                    </label>
+                    <label for="phone-number">
+                        Mobile Phone (optional)
+                        <input type="tel" id="phone-number" name="phone-number" placeholder="+1 (555) 123-4567" autocomplete="tel">
+                    </label>
+                </div>
+
+                <div class="form-actions">
+                    <p class="helper-text">We generate a PDF summary using enterprise-grade cryptography directly in your browser—no data ever leaves your device.</p>
+                    <button type="submit" class="primary-action" id="fill-download-pdf">
+                        Fill &amp; Download PDF
+                    </button>
+                </div>
+                <div class="status-message" id="status-message" role="status" aria-live="polite" data-state="idle"></div>
+            </form>
         </section>
     </main>
+
+    <footer>
+        <div class="footer-inner">
+            <span>&copy; <span id="current-year"></span> TurboVisa. All rights reserved.</span>
+            <span>
+                <a href="#personal-info">Product</a> &bull;
+                <a href="#pdf-form">Data Privacy</a> &bull;
+                <a href="#knowledge-center">Resources</a>
+            </span>
+        </div>
+    </footer>
+
+    <script>
+        // Ensure footer year is always current
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        const form = document.getElementById('pdf-form-element');
+        const submitButton = document.getElementById('fill-download-pdf');
+        const statusMessage = document.getElementById('status-message');
+
+        /**
+         * Formats a date input value into a human-readable form.
+         * @param {string} value - ISO date string.
+         * @returns {string}
+         */
+        const formatDate = (value) => {
+            if (!value) return '';
+            const date = new Date(value);
+            if (Number.isNaN(date.getTime())) return value;
+            return date.toLocaleDateString(undefined, {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        };
+
+        /**
+         * Normalizes SSN string into standard 000-00-0000 format.
+         * @param {string} value
+         * @returns {string}
+         */
+        const normalizeSSN = (value) => {
+            const digits = value.replace(/\D/g, '');
+            if (digits.length === 9) {
+                return `${digits.slice(0, 3)}-${digits.slice(3, 5)}-${digits.slice(5)}`;
+            }
+            return value;
+        };
+
+        /**
+         * Updates the status message slot with styled content.
+         * @param {'idle' | 'success' | 'error'} state
+         * @param {string} message
+         */
+        const updateStatusMessage = (state, message = '') => {
+            statusMessage.dataset.state = state;
+            statusMessage.textContent = message;
+        };
+
+        /**
+         * Validates required fields and returns sanitized values.
+         * @returns {{valid: boolean, errors: string[], data?: Record<string, string>}}
+         */
+        const collectFormData = () => {
+            const formData = new FormData(form);
+
+            const data = {
+                firstName: formData.get('first-name')?.trim() ?? '',
+                middleName: formData.get('middle-name')?.trim() ?? '',
+                lastName: formData.get('last-name')?.trim() ?? '',
+                dob: formData.get('dob') ?? '',
+                gender: formData.get('gender') ?? '',
+                maritalStatus: formData.get('marital-status') ? 'Married' : 'Single',
+                ssn: formData.get('ssn')?.trim() ?? '',
+                nationality: formData.get('nationality')?.trim() ?? '',
+                passportNum: formData.get('passport-num')?.trim() ?? '',
+                passportExpiry: formData.get('passport-expiry') ?? '',
+                email: formData.get('email-address')?.trim() ?? '',
+                phone: formData.get('phone-number')?.trim() ?? ''
+            };
+
+            const requiredFields = [
+                ['firstName', 'First Name'],
+                ['lastName', 'Last Name'],
+                ['dob', 'Date of Birth'],
+                ['gender', 'Gender'],
+                ['ssn', 'Social Security Number'],
+                ['nationality', 'Nationality'],
+                ['passportNum', 'Passport Number'],
+                ['passportExpiry', 'Passport Expiry Date'],
+                ['email', 'Contact Email']
+            ];
+
+            const errors = requiredFields
+                .filter(([key]) => !data[key])
+                .map(([, label]) => label);
+
+            if (!/^\d{3}-?\d{2}-?\d{4}$/.test(data.ssn)) {
+                errors.push('Social Security Number (format: 123-45-6789)');
+            }
+
+            if (data.email && !/^.+@.+\..+$/.test(data.email)) {
+                errors.push('Contact Email (valid email address)');
+            }
+
+            return {
+                valid: errors.length === 0,
+                errors,
+                data
+            };
+        };
+
+        /**
+         * Generates a PDF summary using pdf-lib and triggers download.
+         * @param {Record<string, string>} data
+         */
+        const generatePdf = async (data) => {
+            const { PDFDocument, StandardFonts } = PDFLib;
+            const pdfDoc = await PDFDocument.create();
+            const page = pdfDoc.addPage([612, 792]); // Letter size
+            const helvetica = await pdfDoc.embedFont(StandardFonts.Helvetica);
+            const helveticaBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+
+            const drawText = (text, options) => {
+                page.drawText(text, {
+                    size: options.size ?? 12,
+                    font: options.bold ? helveticaBold : helvetica,
+                    x: options.x,
+                    y: options.y,
+                    color: options.color ?? PDFLib.rgb(0.18, 0.22, 0.31)
+                });
+            };
+
+            const leftX = 72;
+            const rightX = 312;
+            let y = 720;
+
+            drawText('TurboVisa Immigration Summary', { x: leftX, y, size: 20, bold: true });
+            y -= 32;
+            drawText('Generated with TurboVisa PDF Assistant', { x: leftX, y, size: 12 });
+            y -= 12;
+            drawText(`Generated on ${new Date().toLocaleString()}`, { x: leftX, y, size: 10, color: PDFLib.rgb(0.4, 0.44, 0.52) });
+
+            y -= 40;
+            drawText('Personal Information', { x: leftX, y, size: 14, bold: true });
+            y -= 22;
+            drawText(`First Name: ${data.firstName}`, { x: leftX, y });
+            drawText(`Last Name: ${data.lastName}`, { x: rightX, y });
+            y -= 18;
+            drawText(`Middle Name: ${data.middleName || 'N/A'}`, { x: leftX, y });
+            drawText(`Date of Birth: ${formatDate(data.dob)}`, { x: rightX, y });
+            y -= 18;
+            drawText(`Gender: ${data.gender}`, { x: leftX, y });
+            drawText(`Marital Status: ${data.maritalStatus}`, { x: rightX, y });
+
+            y -= 28;
+            drawText('Identity & Citizenship', { x: leftX, y, size: 14, bold: true });
+            y -= 22;
+            drawText(`Nationality: ${data.nationality}`, { x: leftX, y });
+            drawText(`SSN: ${normalizeSSN(data.ssn)}`, { x: rightX, y });
+            y -= 18;
+            drawText(`Passport Number: ${data.passportNum}`, { x: leftX, y });
+            drawText(`Passport Expiry: ${formatDate(data.passportExpiry)}`, { x: rightX, y });
+
+            y -= 28;
+            drawText('Contact Details', { x: leftX, y, size: 14, bold: true });
+            y -= 22;
+            drawText(`Email: ${data.email}`, { x: leftX, y });
+            drawText(`Phone: ${data.phone || 'N/A'}`, { x: rightX, y });
+
+            y -= 36;
+            drawText('Prepared for immigration case processing. This summary was generated locally and has not been transmitted externally.', {
+                x: leftX,
+                y,
+                size: 10,
+                color: PDFLib.rgb(0.37, 0.41, 0.48)
+            });
+
+            const pdfBytes = await pdfDoc.save();
+
+            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+            const url = URL.createObjectURL(blob);
+
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `TurboVisa_${data.firstName || 'Immigration'}_${Date.now()}.pdf`;
+            document.body.appendChild(link);
+            link.click();
+
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        };
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            updateStatusMessage('idle');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Generating...';
+
+            try {
+                const { valid, errors, data } = collectFormData();
+
+                if (!valid) {
+                    updateStatusMessage('error', `Please verify: ${errors.join(', ')}.`);
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Fill & Download PDF';
+                    return;
+                }
+
+                await generatePdf(data);
+                updateStatusMessage('success', 'Success! Your PDF download should start automatically.');
+            } catch (error) {
+                console.error('PDF generation failed:', error);
+                updateStatusMessage('error', 'Something went wrong while generating the PDF. Please try again.');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Fill & Download PDF';
+            }
+        });
+    </script>
 </body>
 </html>
