@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineScope Demo | TSPDT Top 1000 Insights</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./tspdt-dashboard-demo.css">
+</head>
+<body>
+    <div class="page-shell">
+        <header class="hero">
+            <div class="hero-copy">
+                <p class="eyebrow">Interactive preview</p>
+                <h1>CineScope — TSPDT Top 1000 Insights</h1>
+                <p class="subtitle">
+                    Explore a curated excerpt of the TSPDT Top 1000 list, slice by country, genre, decade, or director, and discover tailored film recommendations based on your watch history.
+                </p>
+            </div>
+            <div class="hero-meta">
+                <div class="meta-card">
+                    <p class="meta-label">Films in demo dataset</p>
+                    <p class="meta-value" id="dataset-total">0</p>
+                </div>
+                <div class="meta-card">
+                    <p class="meta-label">Automated smoke tests</p>
+                    <p class="meta-value">6</p>
+                </div>
+            </div>
+        </header>
+
+        <main class="content">
+            <section class="panel filters-panel" aria-labelledby="filters-heading">
+                <div class="panel-head">
+                    <h2 id="filters-heading">Filter the canon</h2>
+                    <p class="panel-subtitle">Combine filters to focus on regional movements, influential directors, or landmark decades.</p>
+                </div>
+                <div class="filters-grid">
+                    <label class="field">
+                        <span class="field-label">Search title or keywords</span>
+                        <input type="search" id="search-term" placeholder="e.g., Godfather, Kurosawa" autocomplete="off">
+                    </label>
+                    <label class="field">
+                        <span class="field-label">Country / Region</span>
+                        <select id="country-filter" class="filter-select" multiple aria-label="Filter by production country"></select>
+                    </label>
+                    <label class="field">
+                        <span class="field-label">Genre</span>
+                        <select id="genre-filter" class="filter-select" multiple aria-label="Filter by genre"></select>
+                    </label>
+                    <label class="field">
+                        <span class="field-label">Decade</span>
+                        <select id="decade-filter" class="filter-select" multiple aria-label="Filter by decade"></select>
+                    </label>
+                    <label class="field">
+                        <span class="field-label">Director</span>
+                        <select id="director-filter" class="filter-select" multiple aria-label="Filter by director"></select>
+                    </label>
+                </div>
+                <div class="filters-actions">
+                    <button type="button" id="reset-filters" class="ghost-button">Reset filters</button>
+                    <span class="filters-hint" id="filters-summary" aria-live="polite"></span>
+                </div>
+            </section>
+
+            <section class="panel summary-panel" aria-labelledby="summary-heading">
+                <div class="panel-head">
+                    <h2 id="summary-heading">Dataset summary</h2>
+                    <p class="panel-subtitle">
+                        Aggregated insights for the films currently in view. Adjust the filters above to reveal different patterns.
+                    </p>
+                </div>
+                <div class="summary-grid">
+                    <article class="summary-card">
+                        <p class="summary-label">Films in focus</p>
+                        <p class="summary-value" id="summary-total">0</p>
+                        <p class="summary-caption">Out of <span id="summary-total-baseline">0</span> demo titles</p>
+                    </article>
+                    <article class="summary-card">
+                        <p class="summary-label">Countries represented</p>
+                        <p class="summary-value" id="summary-countries">0</p>
+                        <p class="summary-caption">Unique production countries</p>
+                    </article>
+                    <article class="summary-card">
+                        <p class="summary-label">Leading genre</p>
+                        <p class="summary-value" id="summary-genres">—</p>
+                        <p class="summary-caption">Based on filtered results</p>
+                    </article>
+                    <article class="summary-card">
+                        <p class="summary-label">Dominant decade</p>
+                        <p class="summary-value" id="summary-decades">—</p>
+                        <p class="summary-caption">Peak period in selection</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="panel table-panel" aria-labelledby="table-heading">
+                <div class="panel-head">
+                    <h2 id="table-heading">Films overview</h2>
+                    <p class="panel-subtitle">
+                        Sorted by TSPDT rank. Scroll within the table for the full view of the filtered selection.
+                    </p>
+                </div>
+                <div class="table-wrapper">
+                    <table id="film-table">
+                        <caption class="sr-only">Filtered TSPDT films</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Rank</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Year</th>
+                                <th scope="col">Director(s)</th>
+                                <th scope="col">Country</th>
+                                <th scope="col">Genre(s)</th>
+                                <th scope="col">Points</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="panel watch-panel" aria-labelledby="watch-heading">
+                <div class="panel-head">
+                    <h2 id="watch-heading">Personal watch analysis</h2>
+                    <p class="panel-subtitle">
+                        Log the films you have already seen to generate a predictive watch count and receive five recommendations tuned to your tastes.
+                    </p>
+                </div>
+                <div class="watch-controls">
+                    <label for="watched-selector" class="watch-label">Add a film you've watched</label>
+                    <div class="watch-actions">
+                        <select id="watched-selector" aria-label="Select a film you have watched"></select>
+                        <button type="button" id="add-watched" class="primary-button">Add film</button>
+                        <button type="button" id="clear-watched" class="ghost-button">Clear list</button>
+                    </div>
+                    <div class="feedback" id="watch-feedback" aria-live="polite"></div>
+                </div>
+
+                <div class="watch-lists">
+                    <div class="watched-column">
+                        <h3>Watched films (<span id="watched-count">0</span>)</h3>
+                        <ul id="watched-list" class="watched-list" aria-live="polite"></ul>
+                    </div>
+                    <div class="recommend-column">
+                        <h3>Recommended next watches</h3>
+                        <p class="prediction">
+                            Estimated total watched: <span class="prediction-number" id="predicted-count">0</span>
+                        </p>
+                        <p id="preference-summary" class="preference-summary">
+                            Add watched films to uncover personalized insights.
+                        </p>
+                        <ul id="recommendations-list" class="recommendations-list" aria-live="polite"></ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel tests-panel" aria-labelledby="tests-heading">
+                <div class="panel-head">
+                    <h2 id="tests-heading">Embedded smoke tests</h2>
+                    <p class="panel-subtitle">
+                        The dashboard runs a quick validation suite to guarantee that the core interactions keep working as expected.
+                    </p>
+                </div>
+                <p id="test-summary" class="test-summary">Running smoke tests…</p>
+                <ul id="test-results" class="test-results" aria-live="polite"></ul>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>Built with ❤️ for the TSPDT cinephile community – demo purposes only.</p>
+        </footer>
+    </div>
+
+    <script type="module" src="./tspdt-dashboard-demo.js"></script>
+</body>
+</html>
